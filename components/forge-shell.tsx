@@ -58,34 +58,67 @@ export function RepoShell() {
   const [running, setRunning] = useState(false);
   const [visible, setVisible] = useState(4);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+  const runGeneration = useRef(0);
+  const pendingResolve = useRef<(() => void) | null>(null);
   const task = useMemo(
     () => repoTasks.find((item) => item.id === selectedId) ?? repoTasks[2],
     [selectedId],
   );
   const report = reports[selectedId]?.[candidate];
 
+  const clearPlayback = useCallback(() => {
+    if (timer.current) clearInterval(timer.current);
+    timer.current = null;
+    pendingResolve.current?.();
+    pendingResolve.current = null;
+    setRunning(false);
+  }, []);
+
+  const cancelPlayback = useCallback(() => {
+    runGeneration.current += 1;
+    clearPlayback();
+  }, [clearPlayback]);
+
   const replay = useCallback(
-    async (taskId = selectedId, nextCandidate: Candidate = candidate) => {
+    async (
+      taskId = selectedId,
+      nextCandidate: Candidate = candidate,
+      sharedGeneration?: number,
+    ) => {
       const artifact = reports[taskId]?.[nextCandidate];
       if (!artifact) throw new Error(`No committed local report for ${taskId}`);
+      const playbackId = sharedGeneration ?? runGeneration.current + 1;
+      if (sharedGeneration === undefined) runGeneration.current = playbackId;
+      clearPlayback();
+      if (runGeneration.current !== playbackId) return { cancelled: true };
       setSelectedId(taskId);
       setCandidate(nextCandidate);
       setView('workbench');
       setRunning(true);
       setVisible(0);
-      if (timer.current) clearInterval(timer.current);
       await new Promise<void>((resolve) => {
+        pendingResolve.current = resolve;
         let phase = 0;
         timer.current = setInterval(() => {
+          if (runGeneration.current !== playbackId) {
+            if (timer.current) clearInterval(timer.current);
+            timer.current = null;
+            pendingResolve.current = null;
+            resolve();
+            return;
+          }
           phase += 1;
           setVisible(phase);
           if (phase >= artifact.phases.length) {
             if (timer.current) clearInterval(timer.current);
+            timer.current = null;
+            pendingResolve.current = null;
             setRunning(false);
             resolve();
           }
         }, 220);
       });
+      if (runGeneration.current !== playbackId) return { cancelled: true };
       return {
         task_id: artifact.task_id,
         candidate: artifact.candidate,
@@ -94,22 +127,28 @@ export function RepoShell() {
         canonical_digest: artifact.canonical_digest,
       };
     },
-    [candidate, selectedId],
+    [candidate, clearPlayback, selectedId],
   );
 
   const playCalibration = useCallback(async () => {
+    const playbackId = runGeneration.current + 1;
+    runGeneration.current = playbackId;
+    clearPlayback();
     for (const nextCandidate of [
       'baseline',
       'mutant',
       'golden',
     ] as Candidate[]) {
-      await replay(selectedId, nextCandidate);
+      if (runGeneration.current !== playbackId) return;
+      await replay(selectedId, nextCandidate, playbackId);
     }
-  }, [replay, selectedId]);
+  }, [clearPlayback, replay, selectedId]);
 
   useEffect(
     () => () => {
+      runGeneration.current += 1;
       if (timer.current) clearInterval(timer.current);
+      pendingResolve.current?.();
     },
     [],
   );
@@ -159,34 +198,48 @@ export function RepoShell() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-primary/30">
-      <Header view={view} onView={setView} />
-      {view === 'workbench' ? (
-        <Workbench
-          task={task}
-          selectedId={selectedId}
-          candidate={candidate}
-          report={report}
-          running={running}
-          visible={visible}
-          onSelect={(id) => {
-            setSelectedId(id);
-            setCandidate('golden');
-            setVisible(4);
-            setRunning(false);
-          }}
-          onCandidate={(value) => {
-            setCandidate(value);
-            setVisible(4);
-            setRunning(false);
-          }}
-          onReplay={() => void replay()}
-          onPlayCalibration={() => void playCalibration()}
-        />
-      ) : view === 'architecture' ? (
-        <Architecture />
-      ) : (
-        <Methodology />
-      )}
+      <a
+        href="#main-content"
+        className="sr-only z-50 rounded-md bg-cyan-200 px-3 py-2 font-semibold text-slate-950 focus:not-sr-only focus:fixed focus:left-3 focus:top-3"
+      >
+        Skip to content
+      </a>
+      <Header
+        view={view}
+        onView={(nextView) => {
+          cancelPlayback();
+          setView(nextView);
+        }}
+      />
+      <div id="main-content" tabIndex={-1}>
+        {view === 'workbench' ? (
+          <Workbench
+            task={task}
+            selectedId={selectedId}
+            candidate={candidate}
+            report={report}
+            running={running}
+            visible={visible}
+            onSelect={(id) => {
+              cancelPlayback();
+              setSelectedId(id);
+              setCandidate('golden');
+              setVisible(4);
+            }}
+            onCandidate={(value) => {
+              cancelPlayback();
+              setCandidate(value);
+              setVisible(4);
+            }}
+            onReplay={() => void replay()}
+            onPlayCalibration={() => void playCalibration()}
+          />
+        ) : view === 'architecture' ? (
+          <Architecture />
+        ) : (
+          <Methodology />
+        )}
+      </div>
     </main>
   );
 }
@@ -217,7 +270,7 @@ function Header({
                 v0.2.0
               </span>
             </span>
-            <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">
+            <span className="block font-mono text-[11px] uppercase tracking-[.16em] text-slate-400">
               Coding benchmark quality control
             </span>
           </span>
@@ -322,7 +375,7 @@ function Workbench({
               ) : (
                 <Play className="size-4 fill-current" />
               )}
-              <span className="hidden sm:inline">Play calibration</span>
+              <span className="hidden sm:inline">Play three controls</span>
               <span className="sm:hidden">Play</span>
             </Button>
           </div>
@@ -415,9 +468,9 @@ function Workbench({
                     {task.difficulty}
                   </span>
                 </div>
-                <h1 className="max-w-2xl text-2xl font-semibold tracking-[-.035em] text-white sm:text-[2rem]">
+                <h2 className="max-w-2xl text-2xl font-semibold tracking-[-.035em] text-white sm:text-[2rem]">
                   {task.title}
-                </h1>
+                </h2>
                 <p className="mt-3 max-w-2xl text-[15px] leading-6 text-slate-300">
                   {task.issue}
                 </p>
@@ -453,11 +506,12 @@ function Workbench({
             <Unavailable task={task} />
           )}
         </div>
+        <MobileEvidence task={task} candidate={candidate} />
         <div className="grid gap-4 sm:grid-cols-3">
           <Signal
             icon={ShieldCheck}
-            label="Only solution files can change"
-            detail="Blocks path escapes, symlinks, and oversized files"
+            label="Candidate overlay accepts only solution files"
+            detail="Rejects path escapes, symlinks, and oversized overlay files before execution"
           />
           <Signal
             icon={TimerReset}
@@ -750,19 +804,6 @@ function ScorePanel({
       : candidate === 'mutant'
         ? 'Expected failure — the shortcut is rejected.'
         : 'Expected pass — the task is solvable and repeatable.';
-  const repository = 'https://github.com/shi1720/repo-gauntlet';
-  const implementation =
-    candidate === 'baseline'
-      ? `${task.repositoryPath}/source`
-      : `${task.repositoryPath}/candidates/${candidate}`;
-  const evidence = [
-    ['Task manifest', `${repository}/blob/main/${task.repositoryPath}/task.json`],
-    ['Grader tests', `${repository}/tree/main/${task.repositoryPath}/grader`],
-    ['Selected code', `${repository}/tree/main/${implementation}`],
-    ['Raw report', `${repository}/blob/main/reports/${task.id}/${candidate}.json`],
-    ['Polyglot CI', `${repository}/actions/workflows/ci.yml`],
-  ];
-
   return (
     <aside className="panel hidden overflow-hidden xl:block">
       <div className="border-b border-white/8 p-5">
@@ -813,20 +854,7 @@ function ScorePanel({
       </div>
       <div className="border-t border-white/8 p-5">
         <p className="eyebrow mb-3">Inspect the evidence</p>
-        <div className="space-y-1">
-          {evidence.map(([label, href]) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noreferrer"
-              className="flex min-h-10 items-center justify-between rounded-lg px-2.5 text-sm text-slate-300 transition hover:bg-white/[.04] hover:text-white"
-            >
-              {label}
-              <ExternalLink className="size-3.5 text-slate-500" />
-            </a>
-          ))}
-        </div>
+        <EvidenceLinks task={task} candidate={candidate} />
       </div>
       <div className="mx-5 border-t border-white/8 py-5">
         <div className="flex gap-3">
@@ -838,6 +866,64 @@ function ScorePanel({
         </div>
       </div>
     </aside>
+  );
+}
+
+function MobileEvidence({
+  task,
+  candidate,
+}: {
+  task: RepoTask;
+  candidate: Candidate;
+}) {
+  return (
+    <details className="panel group xl:hidden">
+      <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between px-5 py-3 text-sm font-semibold text-slate-100 marker:hidden">
+        Inspect source, tests, report, and CI
+        <ChevronRight className="size-4 text-slate-400 transition group-open:rotate-90" />
+      </summary>
+      <div className="border-t border-white/8 p-3">
+        <EvidenceLinks task={task} candidate={candidate} />
+      </div>
+    </details>
+  );
+}
+
+function EvidenceLinks({
+  task,
+  candidate,
+}: {
+  task: RepoTask;
+  candidate: Candidate;
+}) {
+  const repository = 'https://github.com/shi1720/repo-gauntlet';
+  const implementation =
+    candidate === 'baseline'
+      ? `${task.repositoryPath}/source`
+      : `${task.repositoryPath}/candidates/${candidate}`;
+  const evidence = [
+    ['Task manifest', `${repository}/blob/main/${task.repositoryPath}/task.json`],
+    ['Grader tests', `${repository}/tree/main/${task.repositoryPath}/grader`],
+    ['Selected code', `${repository}/tree/main/${implementation}`],
+    ['Raw report', `${repository}/blob/main/reports/${task.id}/${candidate}.json`],
+    ['Polyglot CI', `${repository}/actions/workflows/ci.yml`],
+  ];
+  return (
+    <div className="space-y-1">
+      {evidence.map(([label, href]) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`${label} (opens in a new tab)`}
+          className="flex min-h-11 items-center justify-between rounded-lg px-2.5 text-sm text-slate-300 transition hover:bg-white/[.04] hover:text-white"
+        >
+          {label}
+          <ExternalLink className="size-3.5 text-slate-400" />
+        </a>
+      ))}
+    </div>
   );
 }
 
@@ -884,7 +970,7 @@ function Architecture() {
               <span className="grid size-10 place-items-center rounded-xl bg-white/[.045]">
                 <Icon className="size-5 text-lime-300" />
               </span>
-              <span className="font-mono text-[10px] text-slate-500">
+              <span className="font-mono text-[11px] text-slate-400">
                 0{index + 1}
               </span>
             </div>
