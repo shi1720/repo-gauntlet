@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 — 2026-09-05
+
+- Reframed the workbench around its concrete value: proving benchmark defects, shortcut rejection, solvability, and repeatability before agent use.
+- Added a guided three-control calibration story with explicit expected-failure interpretation and accessible native radio controls.
+- Published Java and Rust control reports alongside Python, C++, and TypeScript, with native CI drift verification for all fifteen artifacts.
+- Added direct evidence links for every selected task and candidate, improved mobile task navigation, contrast, focus states, and explanatory copy.
+
 ## 0.1.4 — 2026-09-05
 
 - Moved Python, Java, and C++ phase markers into grader-owned parent wrappers that validate the child harness transcript before authorizing success.

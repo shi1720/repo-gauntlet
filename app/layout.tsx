@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'RepoGauntlet — Reproducible engineering agent evaluation',
+  title: 'RepoGauntlet — Prove coding-agent tasks work',
   description:
-    'Build, calibrate, and inspect deterministic software-engineering environments across Java, Rust, Python, C++, and TypeScript.',
+    'Quality control for coding-agent benchmarks: prove defects are detectable, shortcuts are rejected, and reference fixes pass repeatably.',
 };
 
 export default function RootLayout({

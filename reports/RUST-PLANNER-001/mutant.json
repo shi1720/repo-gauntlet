@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "7f41940b492eece2a9fd24b7fe8cb8435f256b14df00bd2945e34c0a078171d3",
+  "candidate": "mutant",
+  "canonical_digest": "6e843e24e471350194cc2fd95c7de517b2529dfb9593dc550b97248b89457fa6",
+  "phases": [
+    {
+      "duration_ms": 88,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 334,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\nrunning 2 tests\ntest orders_dependencies_before_dependents ... ok\ntest returns_closed_cycle_witness ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 495,
+      "exit_code": 101,
+      "name": "hidden_tests",
+      "output": "stdout:\nrunning 3 tests\ntest handles_deep_graph_without_recursive_stack_growth ... FAILED\ntest reports_self_and_disconnected_cycles ... ok\ntest result_is_stable_and_deduplicated ... ok\n\nfailures:\n\n---- handles_deep_graph_without_recursive_stack_growth stdout ----\n\nthread 'handles_deep_graph_without_recursive_stack_growth' panicked at .repogauntlet_grader/hidden.rs:9:29:\ncalled `Result::unwrap()` on an `Err` value: Cycle([\"n01025\"])\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    handles_deep_graph_without_recursive_stack_growth\n\ntest result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.11s",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 0,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "quality command skipped until behavior passes",
+      "points": 0.0,
+      "status": "skipped"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 35.0,
+  "seed": 42,
+  "task_id": "RUST-PLANNER-001",
+  "toolchain": {
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "verdict": "TEST_FAILED"
+}

@@ -7,6 +7,12 @@ import cppGolden from '@/reports/CPP-TOPK-001/golden.json';
 import tsBaseline from '@/reports/TS-BATCHER-001/baseline.json';
 import tsMutant from '@/reports/TS-BATCHER-001/mutant.json';
 import tsGolden from '@/reports/TS-BATCHER-001/golden.json';
+import javaBaseline from '@/reports/JAVA-LEDGER-001/baseline.json';
+import javaMutant from '@/reports/JAVA-LEDGER-001/mutant.json';
+import javaGolden from '@/reports/JAVA-LEDGER-001/golden.json';
+import rustBaseline from '@/reports/RUST-PLANNER-001/baseline.json';
+import rustMutant from '@/reports/RUST-PLANNER-001/mutant.json';
+import rustGolden from '@/reports/RUST-PLANNER-001/golden.json';
 
 export type Candidate = 'baseline' | 'mutant' | 'golden';
 export type ReportPhase = {
@@ -37,6 +43,7 @@ export type RepoTask = {
   difficulty: string;
   issue: string;
   localReports: boolean;
+  repositoryPath: string;
 };
 
 export const repoTasks: RepoTask[] = [
@@ -50,7 +57,8 @@ export const repoTasks: RepoTask[] = [
     difficulty: 'Expert',
     issue:
       'Apply every positive credit exactly once under contention, keep balance reads thread-safe, reject negative amounts, and preserve the public API.',
-    localReports: false,
+    localReports: true,
+    repositoryPath: 'tasks/java/concurrent-ledger',
   },
   {
     id: 'RUST-PLANNER-001',
@@ -62,7 +70,8 @@ export const repoTasks: RepoTask[] = [
     difficulty: 'Expert',
     issue:
       'Replace recursive graph traversal with a deterministic iterative planner that survives deep graphs and reports concrete cycle witnesses.',
-    localReports: false,
+    localReports: true,
+    repositoryPath: 'tasks/rust/dependency-planner',
   },
   {
     id: 'PY-INTERVAL-001',
@@ -75,6 +84,7 @@ export const repoTasks: RepoTask[] = [
     issue:
       'Merge unordered half-open windows, reject reversed intervals, discard empty intervals, and preserve the caller’s input.',
     localReports: true,
+    repositoryPath: 'tasks/python/interval-ledger',
   },
   {
     id: 'CPP-TOPK-001',
@@ -87,6 +97,7 @@ export const repoTasks: RepoTask[] = [
     issue:
       'Replace full sorting with O(n log k) comparison work while preserving duplicates and edge-case behavior.',
     localReports: true,
+    repositoryPath: 'tasks/cpp/streaming-topk',
   },
   {
     id: 'TS-BATCHER-001',
@@ -99,6 +110,7 @@ export const repoTasks: RepoTask[] = [
     issue:
       'Guarantee exactly-once ordered delivery during active flushes and retain failed batches for retry.',
     localReports: true,
+    repositoryPath: 'tasks/typescript/event-batcher',
   },
 ];
 
@@ -106,6 +118,16 @@ export const reports: Record<
   string,
   Partial<Record<Candidate, EvaluationReport>>
 > = {
+  'JAVA-LEDGER-001': {
+    baseline: javaBaseline as EvaluationReport,
+    mutant: javaMutant as EvaluationReport,
+    golden: javaGolden as EvaluationReport,
+  },
+  'RUST-PLANNER-001': {
+    baseline: rustBaseline as EvaluationReport,
+    mutant: rustMutant as EvaluationReport,
+    golden: rustGolden as EvaluationReport,
+  },
   'PY-INTERVAL-001': {
     baseline: pyBaseline as EvaluationReport,
     mutant: pyMutant as EvaluationReport,

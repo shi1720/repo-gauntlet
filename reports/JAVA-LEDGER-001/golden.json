@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "3442d04f0fac86c3cabb94407b7a1ae421795ad0e9dcfe8cd312842319ab88be",
+  "candidate": "golden",
+  "canonical_digest": "cce01eaf57bd4115ef1ee192637077994d0f01d878776dc74ed8a5a2b6d08003",
+  "phases": [
+    {
+      "duration_ms": 381,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 529,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\npublic ledger contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 549,
+      "exit_code": 0,
+      "name": "hidden_tests",
+      "output": "stdout:\nhidden ledger contract passed\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests",
+      "points": 55.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 393,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 100.0,
+  "seed": 42,
+  "task_id": "JAVA-LEDGER-001",
+  "toolchain": {
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "verdict": "RESOLVED"
+}

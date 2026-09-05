@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "0c18b295f30a3439dcc0fefa59dcc16f271af8171c15532d9242216875090d25",
+  "candidate": "golden",
+  "canonical_digest": "eb9bb03f21f97204382b635bc79640a15c3ab1f0b0b18a1038a3fbdb21edae48",
+  "phases": [
+    {
+      "duration_ms": 106,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 381,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\nrunning 2 tests\ntest orders_dependencies_before_dependents ... ok\ntest returns_closed_cycle_witness ... ok\n\ntest result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 1023,
+      "exit_code": 0,
+      "name": "hidden_tests",
+      "output": "stdout:\nrunning 3 tests\ntest handles_deep_graph_without_recursive_stack_growth ... ok\ntest reports_self_and_disconnected_cycles ... ok\ntest result_is_stable_and_deduplicated ... ok\n\ntest result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.60s\n\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests",
+      "points": 55.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 105,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 100.0,
+  "seed": 42,
+  "task_id": "RUST-PLANNER-001",
+  "toolchain": {
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "verdict": "RESOLVED"
+}

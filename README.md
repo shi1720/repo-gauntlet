@@ -1,13 +1,13 @@
 # RepoGauntlet
 
-> Turn a bug report into a trustworthy coding-agent reward: frozen source, guarded overlay, hidden checks, golden calibration, deterministic verdict.
+> Prove a coding task works before an AI sees it.
 
 [![Polyglot CI](https://github.com/shi1720/repo-gauntlet/actions/workflows/ci.yml/badge.svg)](https://github.com/shi1720/repo-gauntlet/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-bef264?style=flat-square)](./core/repogauntlet)
 [![Task packs](https://img.shields.io/badge/task_packs-5-c4b5fd?style=flat-square)](./tasks)
 [![License: MIT](https://img.shields.io/badge/license-MIT-fdba74?style=flat-square)](./LICENSE)
 
-RepoGauntlet is a local-first workbench for authoring and calibrating reproducible software-engineering environments for AI agents. It does not grade a patch with one opaque pass/fail. It proves that the original defect is observable, plausible incomplete fixes are rejected, the reference solution passes, and repeated verdicts normalize to the same digest.
+RepoGauntlet is quality control for coding-agent benchmarks. It proves that broken code fails, an incomplete fix is rejected, the reference fix passes, and repeated runs produce the same normalized outcome. Authors get an executable preflight; reviewers get inspectable evidence instead of one opaque pass/fail.
 
 **[Open the interactive evaluation workbench](https://shi1720.github.io/repo-gauntlet/)**
 
@@ -38,7 +38,7 @@ Each task pack contains:
 
 - a frozen source snapshot and behavior-focused issue;
 - an allowlist of candidate-editable files;
-- public and hidden grader suites;
+- public and held-out grader suites;
 - baseline, plausible-mutant, and golden control candidates;
 - exact build/test commands, resource policy, seed, and scoring weights;
 - a canonical JSON report whose digest excludes volatile timings.
@@ -52,7 +52,7 @@ flowchart LR
   C --> D[Ephemeral workspace]
   D --> E[Build]
   E --> F[Public tests]
-  F --> G[Sealed tests]
+  F --> G[Held-out tests]
   G --> H[Quality / complexity gates]
   H --> I[Canonical report + digest]
   J[Baseline control] --> I
@@ -77,13 +77,21 @@ Read the [architecture deep dive](./docs/architecture.md), [task-authoring guide
 | TypeScript + features | [Re-entrant event batcher](./tasks/typescript/event-batcher) | exactly-once failure/retry tests |
 | System design | [Runner + schemas](./core/repogauntlet) | manifest, security, and digest tests |
 
+## What I designed — and why
+
+- **Three control candidates, not one happy path.** The broken baseline proves the defect is visible; the incomplete fix proves the tests reject a plausible shortcut; the reference fix proves the task is solvable.
+- **A normalized outcome fingerprint.** Volatile timings stay in the audit report but outside the repeatability fingerprint, so equivalent runs compare cleanly.
+- **A guarded overlay instead of copying a whole repository.** Candidate edits are constrained to declared solution paths before any command runs.
+- **Separate failure classes.** Candidate defects, build failures, quality failures, timeouts, and infrastructure problems remain distinguishable for reliable training rewards.
+- **Honest execution boundaries.** The bundled runner is for trusted authors and CI; the threat model explicitly specifies the extra boundary required for hostile submissions.
+
 ## Task calibration contract
 
 ```text
-baseline  → must fail     proves the defect exists
-mutant    → must fail     proves the tests reject a shortcut
-golden    → must resolve  proves the task is solvable
-repeat    → same digest   proves the reward is reproducible
+broken baseline  → must fail     proves the defect exists
+incomplete fix   → must fail     proves the tests reject a shortcut
+reference fix    → must resolve  proves the task is solvable
+repeat × 3       → same normalized outcome fingerprint detects verdict drift
 ```
 
 Run one environment:
@@ -125,7 +133,7 @@ Locally verified on the reference checkout: Python core (9 tests), Python calibr
 core/repogauntlet/     Python manifest, firewall, runner, report, CLI
 tasks/               Five real polyglot task environments
 schemas/             Versioned task and report JSON Schemas
-reports/             Machine-readable committed demo report
+reports/             Fifteen machine-readable control reports
 components/ + app/   Interactive TypeScript evaluation workbench
 docs/                Architecture, authoring, security, ADRs
 tests/               Core contract and failure-path tests
@@ -137,6 +145,6 @@ RepoGauntlet is the missing quality gate between “this issue looks interesting
 
 ## Status
 
-`v0.1.4` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
+`v0.2.0` includes five calibrated reference environments, fifteen committed control reports, and a value-first interactive evidence workbench. CI replays every report with its native toolchain to catch drift. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](./CONTRIBUTING.md). Security reports follow [SECURITY.md](./SECURITY.md).

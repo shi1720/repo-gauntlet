@@ -11,6 +11,7 @@ import {
   CircleDot,
   Clock3,
   Code2,
+  ExternalLink,
   FileCode2,
   Gauge,
   GitBranch,
@@ -96,6 +97,16 @@ export function RepoShell() {
     [candidate, selectedId],
   );
 
+  const playCalibration = useCallback(async () => {
+    for (const nextCandidate of [
+      'baseline',
+      'mutant',
+      'golden',
+    ] as Candidate[]) {
+      await replay(selectedId, nextCandidate);
+    }
+  }, [replay, selectedId]);
+
   useEffect(
     () => () => {
       if (timer.current) clearInterval(timer.current);
@@ -147,7 +158,7 @@ export function RepoShell() {
   }, [replay]);
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary/30">
+    <main className="min-h-screen overflow-x-hidden bg-background text-foreground selection:bg-primary/30">
       <Header view={view} onView={setView} />
       {view === 'workbench' ? (
         <Workbench
@@ -169,6 +180,7 @@ export function RepoShell() {
             setRunning(false);
           }}
           onReplay={() => void replay()}
+          onPlayCalibration={() => void playCalibration()}
         />
       ) : view === 'architecture' ? (
         <Architecture />
@@ -202,11 +214,11 @@ function Header({
                 RepoGauntlet
               </span>
               <span className="rounded-full border border-white/10 px-2 py-.5 font-mono text-[10px] text-slate-400">
-                v0.1.4
+                v0.2.0
               </span>
             </span>
             <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">
-              Task calibration laboratory
+              Coding benchmark quality control
             </span>
           </span>
         </button>
@@ -237,7 +249,7 @@ function Header({
       </div>
       <nav
         aria-label="Mobile navigation"
-        className="flex border-t border-white/7 px-3 py-2 md:hidden"
+        className="grid grid-cols-3 border-t border-white/7 px-3 py-2 md:hidden"
       >
         {(['workbench', 'architecture', 'methodology'] as View[]).map(
           (item) => (
@@ -266,6 +278,7 @@ function Workbench({
   onSelect,
   onCandidate,
   onReplay,
+  onPlayCalibration,
 }: {
   task: RepoTask;
   selectedId: string;
@@ -276,10 +289,67 @@ function Workbench({
   onSelect: (id: string) => void;
   onCandidate: (value: Candidate) => void;
   onReplay: () => void;
+  onPlayCalibration: () => void;
 }) {
   return (
-    <div className="mx-auto grid max-w-[1540px] gap-4 p-4 sm:p-7 lg:grid-cols-[292px_minmax(0,1fr)] xl:grid-cols-[292px_minmax(0,1fr)_300px]">
-      <aside className="panel order-2 overflow-hidden lg:order-1">
+    <div className="mx-auto max-w-[1540px] space-y-4 p-4 sm:p-7">
+      <section className="value-band panel relative overflow-hidden p-5 sm:p-6">
+        <div className="relative z-10 grid gap-5 lg:grid-cols-[minmax(0,1.35fr)_minmax(420px,.65fr)] lg:items-center">
+          <div>
+            <p className="eyebrow text-lime-300">For coding-agent task authors</p>
+            <h1 className="mt-2 max-w-3xl text-2xl font-semibold tracking-[-.04em] text-white sm:text-3xl">
+              Prove a coding task works before an AI sees it.
+            </h1>
+            <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300 sm:text-base">
+              RepoGauntlet confirms the broken code fails, an incomplete fix is
+              rejected, the reference fix passes, and repeated runs produce the
+              same normalized outcome.
+            </p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-[1fr_auto]">
+            <div className="grid grid-cols-3 overflow-hidden rounded-xl border border-white/9 bg-black/20">
+              <ProofNumber value="5" label="languages" />
+              <ProofNumber value="5" label="task packs" />
+              <ProofNumber value="15" label="controls" />
+            </div>
+            <Button
+              onClick={onPlayCalibration}
+              disabled={running || !task.localReports}
+              className="h-full min-h-14 bg-lime-300 px-4 font-semibold text-[#091006] hover:bg-lime-200"
+            >
+              {running ? (
+                <RefreshCw className="size-4 animate-spin" />
+              ) : (
+                <Play className="size-4 fill-current" />
+              )}
+              <span className="hidden sm:inline">Play calibration</span>
+              <span className="sm:hidden">Play</span>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <nav
+        aria-label="Choose a task"
+        className="panel flex gap-2 overflow-x-auto p-2 lg:hidden"
+      >
+        {repoTasks.map((item) => (
+          <button
+            key={item.id}
+            aria-current={selectedId === item.id ? 'page' : undefined}
+            onClick={() => onSelect(item.id)}
+            className={`min-h-11 shrink-0 rounded-lg px-3 text-left text-xs ${selectedId === item.id ? 'bg-lime-300/10 text-lime-200 ring-1 ring-lime-300/25' : 'bg-white/[.025] text-slate-300'}`}
+          >
+            <span className="block font-medium">{item.language}</span>
+            <span className="mt-0.5 block text-[11px] text-slate-400">
+              {item.kind}
+            </span>
+          </button>
+        ))}
+      </nav>
+
+      <div className="grid gap-4 lg:grid-cols-[292px_minmax(0,1fr)] xl:grid-cols-[292px_minmax(0,1fr)_300px]">
+      <aside className="panel hidden overflow-hidden lg:block">
         <div className="flex items-center justify-between border-b border-white/8 p-4">
           <p className="eyebrow">Task catalog</p>
           <span className="font-mono text-xs text-slate-400">05 / 05</span>
@@ -288,7 +358,7 @@ function Workbench({
           {repoTasks.map((item) => (
             <button
               key={item.id}
-              aria-pressed={selectedId === item.id}
+              aria-current={selectedId === item.id ? 'page' : undefined}
               onClick={() => onSelect(item.id)}
               className={`task-row w-full text-left ${selectedId === item.id ? 'task-row-active' : ''}`}
             >
@@ -315,18 +385,18 @@ function Workbench({
           <div className="flex gap-3">
             <Boxes className="mt-0.5 size-4 text-slate-400" />
             <div>
-              <p className="text-xs font-medium text-slate-200">
-                Truthful artifacts
+              <p className="text-sm font-medium text-slate-200">
+                What this page shows
               </p>
-              <p className="mt-1 text-xs leading-5 text-slate-400">
-                The browser replays only reports generated by the local
-                evaluator and checked into this release.
+              <p className="mt-1 text-sm leading-5 text-slate-400">
+                Saved evaluator reports from the repository—not code running in
+                your browser.
               </p>
             </div>
           </div>
         </div>
       </aside>
-      <section className="order-1 space-y-4 lg:order-2">
+      <section className="min-w-0 space-y-4">
         <div className="panel overflow-hidden">
           <div className="border-b border-white/8 p-5 sm:p-6">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
@@ -365,28 +435,16 @@ function Workbench({
                 {report
                   ? running
                     ? 'Replaying…'
-                    : 'Replay report'
+                    : 'Replay saved run'
                   : 'CLI required'}
               </Button>
             </div>
             {task.localReports && (
-              <div
-                className="mt-5 flex w-fit rounded-lg border border-white/8 bg-black/20 p-1"
-                aria-label="Candidate artifact"
-              >
-                {(['baseline', 'mutant', 'golden'] as Candidate[]).map(
-                  (item) => (
-                    <button
-                      key={item}
-                      aria-pressed={candidate === item}
-                      onClick={() => onCandidate(item)}
-                      className={`rounded-md px-3 py-1.5 font-mono text-[11px] capitalize ${candidate === item ? 'bg-white/10 text-white' : 'text-slate-400 hover:text-white'}`}
-                    >
-                      {item}
-                    </button>
-                  ),
-                )}
-              </div>
+              <CandidateRail
+                task={task}
+                candidate={candidate}
+                onCandidate={onCandidate}
+              />
             )}
           </div>
           {report ? (
@@ -398,22 +456,131 @@ function Workbench({
         <div className="grid gap-4 sm:grid-cols-3">
           <Signal
             icon={ShieldCheck}
-            label="Guarded overlays"
-            detail="Allowlisted paths, symlink and size checks"
+            label="Only solution files can change"
+            detail="Blocks path escapes, symlinks, and oversized files"
           />
           <Signal
             icon={TimerReset}
-            label="Repeated calibration"
-            detail="Three golden runs must share one digest"
+            label="Repeatability check"
+            detail="Three reference runs must share one outcome fingerprint"
           />
           <Signal
             icon={Zap}
-            label="Executable quality"
+            label="Separate quality gate"
             detail="Distinct checks earn points; redundant checks earn zero"
           />
         </div>
       </section>
-      <ScorePanel report={report} />
+      <ScorePanel task={task} candidate={candidate} report={report} />
+      </div>
+    </div>
+  );
+}
+
+function ProofNumber({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="border-r border-white/8 px-3 py-3 text-center last:border-r-0">
+      <span className="block font-mono text-lg font-semibold text-white">
+        {value}
+      </span>
+      <span className="block text-[11px] text-slate-400">{label}</span>
+    </div>
+  );
+}
+
+function CandidateRail({
+  task,
+  candidate,
+  onCandidate,
+}: {
+  task: RepoTask;
+  candidate: Candidate;
+  onCandidate: (value: Candidate) => void;
+}) {
+  const controls: Array<{
+    id: Candidate;
+    label: string;
+    expectation: string;
+    success: string;
+  }> = [
+    {
+      id: 'baseline',
+      label: 'Broken baseline',
+      expectation: 'must fail',
+      success: 'Defect detected',
+    },
+    {
+      id: 'mutant',
+      label: 'Incomplete fix',
+      expectation: 'must fail',
+      success: 'Shortcut rejected',
+    },
+    {
+      id: 'golden',
+      label: 'Reference fix',
+      expectation: 'must pass ×3',
+      success: 'Task is solvable',
+    },
+  ];
+
+  return (
+    <div className="mt-5">
+      <div className="mb-2 flex items-center justify-between gap-4">
+        <p className="eyebrow">Calibration proof</p>
+        <p className="hidden text-xs text-slate-400 sm:block">
+          Select a control to inspect its saved evidence
+        </p>
+      </div>
+      <fieldset
+        aria-label="Calibration control"
+        className="grid gap-2 sm:grid-cols-3"
+      >
+        {controls.map((control, index) => {
+          const controlReport = reports[task.id]?.[control.id];
+          const valid = controlReport
+            ? control.id === 'golden'
+              ? controlReport.verdict === 'RESOLVED'
+              : controlReport.verdict === 'TEST_FAILED'
+            : false;
+          return (
+            <label
+              key={control.id}
+              className={`control-choice relative min-h-20 cursor-pointer rounded-xl border p-3 text-left transition ${candidate === control.id ? 'border-lime-300/35 bg-lime-300/[.07] shadow-[inset_0_0_0_1px_rgba(190,242,100,.08)]' : 'border-white/8 bg-black/15 hover:border-white/15 hover:bg-white/[.025]'}`}
+            >
+              <input
+                type="radio"
+                name="calibration-control"
+                value={control.id}
+                checked={candidate === control.id}
+                onChange={() => onCandidate(control.id)}
+                className="sr-only"
+              />
+              {index < controls.length - 1 && (
+                <ArrowRight className="absolute -right-3 top-1/2 z-10 hidden size-5 rounded-full border border-white/8 bg-[#0c121d] p-1 text-slate-500 sm:block" />
+              )}
+              <span className="flex items-start justify-between gap-2">
+                <span>
+                  <span className="block text-sm font-semibold text-slate-100">
+                    {control.label}
+                  </span>
+                  <span className="mt-0.5 block text-xs text-slate-400">
+                    {control.expectation}
+                  </span>
+                </span>
+                <span
+                  className={`mt-0.5 size-2.5 shrink-0 rounded-full ${valid ? 'bg-lime-300 shadow-[0_0_14px_rgba(190,242,100,.55)]' : 'bg-slate-600'}`}
+                />
+              </span>
+              <span
+                className={`mt-2 flex items-center gap-1.5 text-xs ${valid ? 'text-lime-200' : 'text-slate-500'}`}
+              >
+                {valid && <Check className="size-3.5" />}
+                {controlReport ? control.success : 'Report not bundled'}
+              </span>
+            </label>
+          );
+        })}
+      </fieldset>
     </div>
   );
 }
@@ -436,7 +603,7 @@ function ReportPanel({
     <div className="grid md:grid-cols-[1fr_240px]">
       <div className="border-b border-white/8 p-5 md:border-b-0 md:border-r sm:p-6">
         <div className="mb-4 flex items-center justify-between">
-          <p className="eyebrow">Committed report trace</p>
+          <p className="eyebrow">Saved evaluation run</p>
           <span
             aria-live="polite"
             className={`flex items-center gap-1.5 font-mono text-[11px] ${running ? 'text-cyan-300' : report.verdict === 'RESOLVED' ? 'text-lime-300' : 'text-amber-300'}`}
@@ -475,7 +642,7 @@ function ReportPanel({
                         ? '–'
                         : '!'}
                   </span>{' '}
-                  {phase.name.padEnd(13)} {phase.status}{' '}
+                  {phaseLabel(phase.name).padEnd(13)} {phase.status}{' '}
                   <span className="text-slate-500">{phase.duration_ms}ms</span>
                 </p>
                 {phase.output && (
@@ -489,7 +656,7 @@ function ReportPanel({
               <div
                 className={`border-l-2 px-3 py-2 ${report.verdict === 'RESOLVED' ? 'border-lime-300/40 bg-lime-300/[.04] text-lime-100/80' : 'border-amber-300/40 bg-amber-300/[.04] text-amber-100/80'}`}
               >
-                score {report.score.toFixed(1)} / 100 · digest{' '}
+                score {report.score.toFixed(1)} / 100 · outcome fingerprint{' '}
                 {report.canonical_digest.slice(0, 12)}…
               </div>
             )}
@@ -506,7 +673,7 @@ function ReportPanel({
             >
               <div className="mb-1.5 flex items-center justify-between text-xs">
                 <span className="capitalize text-slate-400">
-                  {phase.name.replace('_', ' ')}
+                  {phaseLabel(phase.name)}
                 </span>
                 <span
                   className={
@@ -528,11 +695,11 @@ function ReportPanel({
           ))}
         </div>
         <div className="mt-6 grid grid-cols-2 gap-2">
-          <Metric icon={Clock3} value={`${totalMs}ms`} label="recorded time" />
+          <Metric icon={Clock3} value={`${totalMs}ms`} label="Recorded time" />
           <Metric
             icon={FileCode2}
             value={report.artifact_digest.slice(0, 7)}
-            label="artifact hash"
+            label="Bundle fingerprint"
           />
         </div>
       </div>
@@ -563,11 +730,43 @@ function Unavailable({ task }: { task: RepoTask }) {
     </div>
   );
 }
-function ScorePanel({ report }: { report?: EvaluationReport }) {
+function ScorePanel({
+  task,
+  candidate,
+  report,
+}: {
+  task: RepoTask;
+  candidate: Candidate;
+  report?: EvaluationReport;
+}) {
+  const expectedResult = report
+    ? candidate === 'golden'
+      ? report.verdict === 'RESOLVED'
+      : report.verdict === 'TEST_FAILED'
+    : false;
+  const interpretation =
+    candidate === 'baseline'
+      ? 'Expected failure — the defect is observable.'
+      : candidate === 'mutant'
+        ? 'Expected failure — the shortcut is rejected.'
+        : 'Expected pass — the task is solvable and repeatable.';
+  const repository = 'https://github.com/shi1720/repo-gauntlet';
+  const implementation =
+    candidate === 'baseline'
+      ? `${task.repositoryPath}/source`
+      : `${task.repositoryPath}/candidates/${candidate}`;
+  const evidence = [
+    ['Task manifest', `${repository}/blob/main/${task.repositoryPath}/task.json`],
+    ['Grader tests', `${repository}/tree/main/${task.repositoryPath}/grader`],
+    ['Selected code', `${repository}/tree/main/${implementation}`],
+    ['Raw report', `${repository}/blob/main/reports/${task.id}/${candidate}.json`],
+    ['Polyglot CI', `${repository}/actions/workflows/ci.yml`],
+  ];
+
   return (
-    <aside className="panel order-3 hidden overflow-hidden xl:block">
+    <aside className="panel hidden overflow-hidden xl:block">
       <div className="border-b border-white/8 p-5">
-        <p className="eyebrow">Artifact score</p>
+        <p className="eyebrow">Selected candidate score</p>
         <div className="mt-4 flex items-end gap-2">
           <span className="font-mono text-5xl font-semibold tracking-[-.07em] text-white">
             {report ? report.score.toFixed(1) : '—'}
@@ -586,18 +785,25 @@ function ScorePanel({ report }: { report?: EvaluationReport }) {
         )}
       </div>
       <div className="p-5">
-        <p className="eyebrow mb-5">Evidence</p>
+        <p className="eyebrow mb-3">Calibration meaning</p>
         {report ? (
-          <div className="space-y-5">
-            {report.phases.map((phase) => (
-              <ScoreRow
-                key={phase.name}
-                label={phase.name.replace('_', ' ')}
-                score={`${phase.points} points`}
-                width={`${Math.min(100, (phase.points / phaseMaximum(report, phase.name)) * 100)}%`}
-                warn={phase.status !== 'passed'}
-              />
-            ))}
+          <div
+            className={`rounded-xl border p-3 ${expectedResult ? 'border-lime-300/20 bg-lime-300/[.055]' : 'border-rose-300/20 bg-rose-300/[.055]'}`}
+          >
+            <p
+              className={`flex items-start gap-2 text-sm font-medium leading-5 ${expectedResult ? 'text-lime-200' : 'text-rose-200'}`}
+            >
+              {expectedResult ? (
+                <Check className="mt-0.5 size-4 shrink-0" />
+              ) : (
+                <TriangleAlert className="mt-0.5 size-4 shrink-0" />
+              )}
+              {expectedResult ? interpretation : 'Calibration control failed.'}
+            </p>
+            <p className="mt-2 text-xs leading-5 text-slate-400">
+              A low candidate score can be the correct outcome when testing a
+              broken or incomplete solution.
+            </p>
           </div>
         ) : (
           <p className="text-sm leading-6 text-slate-400">
@@ -605,12 +811,29 @@ function ScorePanel({ report }: { report?: EvaluationReport }) {
           </p>
         )}
       </div>
+      <div className="border-t border-white/8 p-5">
+        <p className="eyebrow mb-3">Inspect the evidence</p>
+        <div className="space-y-1">
+          {evidence.map(([label, href]) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex min-h-10 items-center justify-between rounded-lg px-2.5 text-sm text-slate-300 transition hover:bg-white/[.04] hover:text-white"
+            >
+              {label}
+              <ExternalLink className="size-3.5 text-slate-500" />
+            </a>
+          ))}
+        </div>
+      </div>
       <div className="mx-5 border-t border-white/8 py-5">
         <div className="flex gap-3">
           <Sparkles className="mt-0.5 size-4 shrink-0 text-cyan-300" />
           <p className="text-xs leading-5 text-slate-400">
-            Every visible score, status, duration, and digest comes directly
-            from a committed evaluator report.
+            Scores, verdicts, timings, and fingerprints come from repository
+            reports regenerated in CI.
           </p>
         </div>
       </div>
@@ -633,21 +856,25 @@ function Architecture() {
   const steps = [
     [FileCode2, 'Task pack', 'Frozen source + strict manifest'],
     [ShieldCheck, 'Overlay firewall', 'Paths, size, and symlink checks'],
-    [Terminal, 'Fresh workspaces', 'One isolated directory per phase'],
-    [Activity, 'Four real commands', 'Build, public, hidden, quality'],
-    [GitBranch, 'Canonical report', 'Artifact + outcome digests'],
+    [
+      Terminal,
+      'Fresh workspaces',
+      'Temporary directory per phase; commands still run on the host',
+    ],
+    [Activity, 'Four real commands', 'Build, public, held-out, quality'],
+    [GitBranch, 'Canonical report', 'Bundle + normalized outcome fingerprints'],
   ] as const;
   return (
     <section className="mx-auto max-w-[1280px] px-4 py-12 sm:px-7 sm:py-16">
       <div className="mb-10 max-w-3xl">
         <p className="eyebrow mb-4">Implemented architecture</p>
         <h1 className="text-3xl font-semibold tracking-[-.04em] text-white sm:text-5xl">
-          Task-authoring evidence you can replay.
+          How a coding task earns trust.
         </h1>
         <p className="mt-5 text-base leading-7 text-slate-300">
-          RepoGauntlet is a trusted-local calibrator: it checks task quality
-          before an environment is promoted into a hardened execution service.
-          It never claims the local subprocess runner is a multi-tenant sandbox.
+          RepoGauntlet verifies evaluation design before a task is used to train
+          or assess a coding agent. The local runner is intentionally scoped to
+          trusted authors and CI—not arbitrary hostile submissions.
         </p>
       </div>
       <div className="panel grid gap-px overflow-hidden bg-white/8 lg:grid-cols-5">
@@ -707,13 +934,19 @@ function Methodology() {
   const skills = [
     [
       'Python 3',
-      'Strict manifests, process-tree timeout, overlay firewall, CLI',
+      'Runner, schema validation, timeout cleanup, and safe file overlays',
     ],
-    ['Java', 'Concurrent lost-update repair and stress controls'],
-    ['Rust', 'Iterative graph refactor with cycle witness'],
-    ['C++', 'Grader-observed comparisons for top-k optimization'],
-    ['TypeScript', 'Re-entrant feature, strict type check, report UI'],
-    ['Engineering', 'Bugs, features, refactors, performance, docs'],
+    ['Java', 'Thread-safe ledger; stress tests reject lost updates'],
+    [
+      'Rust',
+      'Iterative planning handles 50,000-deep graphs and reports cycle paths',
+    ],
+    ['C++', 'Top-k selection meets a deterministic O(n log k) comparison budget'],
+    ['TypeScript', 'Exactly-once async batching plus the interactive report UI'],
+    [
+      'Engineering',
+      'Bug fixes, features, refactoring, optimization, tests, CI, and documentation',
+    ],
   ];
   return (
     <section className="mx-auto max-w-[1180px] px-4 py-12 sm:px-7 sm:py-16">
@@ -724,27 +957,27 @@ function Methodology() {
             A benchmark must test its own tests.
           </h1>
           <p className="mt-5 text-base leading-7 text-slate-300">
-            The untouched source must reach a behavioral failure, a plausible
-            incomplete mutant must also fail, and the golden reference must
-            resolve three times with one stable outcome digest.
+            Broken code must fail for the intended reason. A plausible shortcut
+            must also fail. The reviewed reference must pass three times with
+            one normalized outcome fingerprint.
           </p>
           <div className="mt-8 space-y-3">
             <Control
               icon={TriangleAlert}
-              label="Baseline"
-              detail="Untouched source must build, then fail behavior"
+              label="Broken baseline"
+              detail="Untouched source builds, then exposes the defect"
               tone="amber"
             />
             <Control
               icon={Wrench}
-              label="Mutant"
-              detail="A shortcut must build, then fail behavior"
+              label="Incomplete fix"
+              detail="A plausible shortcut builds, then gets rejected"
               tone="cyan"
             />
             <Control
               icon={Check}
-              label="Golden × 3"
-              detail="All four commands pass with one digest"
+              label="Reference fix × 3"
+              detail="Every phase passes with one outcome fingerprint"
               tone="lime"
             />
           </div>
@@ -796,6 +1029,11 @@ function lastMeaningfulLine(output: string) {
       .at(-1) ?? ''
   );
 }
+function phaseLabel(name: string) {
+  return name === 'hidden_tests'
+    ? 'held-out tests'
+    : name.replace('_', ' ');
+}
 function Metric({
   icon: Icon,
   value,
@@ -809,7 +1047,7 @@ function Metric({
     <div className="rounded-lg border border-white/7 bg-white/[.025] p-3">
       <Icon className="mb-2 size-3.5 text-slate-400" />
       <p className="font-mono text-sm text-slate-200">{value}</p>
-      <p className="mt-0.5 text-[10px] uppercase tracking-wider text-slate-400">
+      <p className="mt-0.5 text-[11px] uppercase tracking-wider text-slate-400">
         {label}
       </p>
     </div>
@@ -837,32 +1075,6 @@ function Signal({
           {detail}
         </span>
       </span>
-    </div>
-  );
-}
-function ScoreRow({
-  label,
-  score,
-  width,
-  warn = false,
-}: {
-  label: string;
-  score: string;
-  width: string;
-  warn?: boolean;
-}) {
-  return (
-    <div>
-      <div className="mb-2 flex justify-between text-xs capitalize">
-        <span className="text-slate-300">{label}</span>
-        <span className="font-mono text-slate-400">{score}</span>
-      </div>
-      <div className="h-1 rounded-full bg-white/7">
-        <div
-          className={`h-full rounded-full ${warn ? 'bg-amber-300' : 'bg-cyan-300'}`}
-          style={{ width }}
-        />
-      </div>
     </div>
   );
 }

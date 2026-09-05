@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "8f4cd20adbe19fb723f3018ced0bf2c3ca90dcaa39366e37ac1a4ce53c11fc1c",
+  "candidate": "baseline",
+  "canonical_digest": "ccdb545e5d75f7de9c0e89ab7365d830cbc0538d1879046744917d3a0ac32b70",
+  "phases": [
+    {
+      "duration_ms": 358,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 586,
+      "exit_code": 1,
+      "name": "public_tests",
+      "output": "stderr:\nException in thread \"main\" java.lang.AssertionError: lost credits: 38774 != 160000\n\tat PublicTest.assertConcurrentCredits(PublicTest.java:27)\n\tat PublicTest.main(PublicTest.java:8)",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 886,
+      "exit_code": 1,
+      "name": "hidden_tests",
+      "output": "stderr:\nException in thread \"main\" java.lang.AssertionError: lost credits: 110080 != 800000\n\tat PublicTest.assertConcurrentCredits(PublicTest.java:27)\n\tat HiddenTest.main(HiddenTest.java:7)",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 0,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "quality command skipped until behavior passes",
+      "points": 0.0,
+      "status": "skipped"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 10.0,
+  "seed": 42,
+  "task_id": "JAVA-LEDGER-001",
+  "toolchain": {
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "verdict": "TEST_FAILED"
+}

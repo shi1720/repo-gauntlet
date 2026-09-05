@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "9f4a19d10bf669310c0b5701bfbe9dfbd23ef9a3e790e68b23ee2ff838a5be28",
+  "candidate": "baseline",
+  "canonical_digest": "fb9f18d0feee0331f19f2e5270291fde9c42981d582909fbb54cf6fa6fc82949",
+  "phases": [
+    {
+      "duration_ms": 90,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 340,
+      "exit_code": 101,
+      "name": "public_tests",
+      "output": "stdout:\nrunning 2 tests\ntest orders_dependencies_before_dependents ... ok\ntest returns_closed_cycle_witness ... FAILED\n\nfailures:\n\n---- returns_closed_cycle_witness stdout ----\n\nthread 'returns_closed_cycle_witness' panicked at .repogauntlet_grader/public.rs:18:5:\nassertion failed: path.len() >= 2\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    returns_closed_cycle_witness\n\ntest result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 583,
+      "exit_code": 250,
+      "name": "hidden_tests",
+      "output": "stdout:\nrunning 3 tests\ntest handles_deep_graph_without_recursive_stack_growth ...\nstderr:\nthread 'handles_deep_graph_without_recursive_stack_growth' has overflowed its stack\nfatal runtime error: stack overflow, aborting",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 0,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "quality command skipped until behavior passes",
+      "points": 0.0,
+      "status": "skipped"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 10.0,
+  "seed": 42,
+  "task_id": "RUST-PLANNER-001",
+  "toolchain": {
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.14"
+  },
+  "verdict": "TEST_FAILED"
+}

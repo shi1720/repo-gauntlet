@@ -41,7 +41,7 @@
   --secondary: #111827;
   --secondary-foreground: #e8edf5;
   --muted: #121925;
-  --muted-foreground: #7b879a;
+  --muted-foreground: #94a3b8;
   --accent: #182130;
   --accent-foreground: #e8edf5;
   --destructive: #fb7185;
@@ -64,12 +64,43 @@ body {
       rgba(34, 211, 238, 0.07),
       transparent 34rem
     ),
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(190, 242, 100, 0.045),
+      transparent 28rem
+    ),
     var(--background);
   color: var(--foreground);
 }
 button,
 a {
   -webkit-tap-highlight-color: transparent;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible + * {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.control-choice:has(input:focus-visible) {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.value-band::after {
+  position: absolute;
+  right: -8rem;
+  bottom: -11rem;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 999px;
+  background: repeating-radial-gradient(
+    circle,
+    rgba(103, 232, 249, 0.08) 0 1px,
+    transparent 1px 19px
+  );
+  mask-image: linear-gradient(to top left, #000, transparent 72%);
+  content: '';
+  pointer-events: none;
 }
 .panel {
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -85,11 +116,11 @@ a {
 }
 .eyebrow {
   font-family: var(--font-geist-mono), monospace;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #64748b;
+  color: #94a3b8;
 }
 .status-pill {
   display: inline-flex;
@@ -99,7 +130,7 @@ a {
   border-radius: 999px;
   padding: 0.3rem 0.55rem;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 10px;
+  font-size: 11px;
   color: #94a3b8;
   background: rgba(255, 255, 255, 0.02);
 }
@@ -125,7 +156,7 @@ a {
   border-radius: 4px;
   padding: 0.22rem 0.38rem;
   font-family: var(--font-geist-mono), monospace;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
 }
