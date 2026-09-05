@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2 — 2026-09-05
+
+- Corrected the Rust deep-graph fixture so it deterministically exercises a 50,000-node dependency chain on every platform.
+- Updated every GitHub Actions dependency to the latest release and kept each action pinned to an immutable commit SHA.
+- Made the public GitHub Pages workbench the primary portfolio demo.
+
 ## 0.1.1 — 2026-09-05
 
 - Made the Rust negative control fail deterministically on the deep-graph contract.

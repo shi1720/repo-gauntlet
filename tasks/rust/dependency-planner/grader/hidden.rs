@@ -4,8 +4,12 @@ use planner::plan;
 #[test]
 fn handles_deep_graph_without_recursive_stack_growth() {
     let mut graph=BTreeMap::new();
-    for i in 1..50_000 { graph.insert(format!("n{:05}",i),vec![format!("n{:05}",i-1)]); }
-    let result=plan(&graph).unwrap(); assert_eq!(result.len(),50_000); assert_eq!(result[0],"n00000");
+    for i in 0..49_999 { graph.insert(format!("n{:05}",i),vec![format!("n{:05}",i+1)]); }
+    graph.insert("n49999".into(),vec![]);
+    let result=plan(&graph).unwrap();
+    assert_eq!(result.len(),50_000);
+    assert_eq!(result.first().unwrap(),"n49999");
+    assert_eq!(result.last().unwrap(),"n00000");
 }
 
 #[test]

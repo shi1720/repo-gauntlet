@@ -9,9 +9,9 @@
 
 RepoGauntlet is a local-first workbench for authoring and calibrating reproducible software-engineering environments for AI agents. It does not grade a patch with one opaque pass/fail. It proves that the original defect is observable, plausible incomplete fixes are rejected, the reference solution passes, and repeated verdicts normalize to the same digest.
 
-**[Open the interactive evaluation workbench](https://repo-gauntlet-ai-lab.sg127977958.chatgpt.site)**
+**[Open the interactive evaluation workbench](https://shi1720.github.io/repo-gauntlet/)**
 
-[![RepoGauntlet report workbench](./public/repogauntlet-workbench.png)](https://repo-gauntlet-ai-lab.sg127977958.chatgpt.site)
+[![RepoGauntlet report workbench](./public/repogauntlet-workbench.png)](https://shi1720.github.io/repo-gauntlet/)
 
 ## 30-second demo
 
@@ -137,6 +137,6 @@ RepoGauntlet is the missing quality gate between “this issue looks interesting
 
 ## Status
 
-`v0.1.1` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
+`v0.1.2` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](./CONTRIBUTING.md). Security reports follow [SECURITY.md](./SECURITY.md).
