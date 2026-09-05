@@ -228,7 +228,7 @@ function Header({
           )}
         </nav>
         <a
-          href="https://github.com/shivam-ai-first/repo-gauntlet"
+          href="https://github.com/shi1720/repo-gauntlet"
           className="flex items-center gap-2 text-xs text-slate-300 transition hover:text-white"
         >
           <GitBranch className="size-4" />

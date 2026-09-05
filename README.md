@@ -2,7 +2,7 @@
 
 > Turn a bug report into a trustworthy coding-agent reward: frozen source, guarded overlay, hidden checks, golden calibration, deterministic verdict.
 
-[![Polyglot CI](https://github.com/shivam-ai-first/repo-gauntlet/actions/workflows/ci.yml/badge.svg)](https://github.com/shivam-ai-first/repo-gauntlet/actions/workflows/ci.yml)
+[![Polyglot CI](https://github.com/shi1720/repo-gauntlet/actions/workflows/ci.yml/badge.svg)](https://github.com/shi1720/repo-gauntlet/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/Python-3.9%2B-bef264?style=flat-square)](./core/repogauntlet)
 [![Task packs](https://img.shields.io/badge/task_packs-5-c4b5fd?style=flat-square)](./tasks)
 [![License: MIT](https://img.shields.io/badge/license-MIT-fdba74?style=flat-square)](./LICENSE)
@@ -16,7 +16,7 @@ RepoGauntlet is a local-first workbench for authoring and calibrating reproducib
 ## 30-second demo
 
 ```bash
-git clone https://github.com/shivam-ai-first/repo-gauntlet.git
+git clone https://github.com/shi1720/repo-gauntlet.git
 cd repo-gauntlet
 make demo
 ```
