@@ -137,6 +137,6 @@ RepoGauntlet is the missing quality gate between “this issue looks interesting
 
 ## Status
 
-`v0.1.0` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
+`v0.1.1` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](./CONTRIBUTING.md). Security reports follow [SECURITY.md](./SECURITY.md).

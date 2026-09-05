@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "a2a3a14a2af843e42fc140c177dfb8f101961e91bf2eba59aa3c5bc29a8e3104",
+  "artifact_digest": "35d3abbe75ab57ba1fb74b833ef434a6ca2405afc87bf5f606ae58c1a962e1e3",
   "candidate": "mutant",
-  "canonical_digest": "6022fec90dd645822624a1e81e0dbc17b5298bfb4fcf6b96e70861e6c6383b72",
+  "canonical_digest": "ab39a77db33c97152e737efb012a22c424fa28d863694a528c7ca8323b674fa4",
   "phases": [
     {
-      "duration_ms": 318,
+      "duration_ms": 201,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,7 +12,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 1111,
+      "duration_ms": 714,
       "exit_code": 0,
       "name": "public_tests",
       "output": "stdout:\npublic top-k contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
@@ -20,10 +20,10 @@
       "status": "passed"
     },
     {
-      "duration_ms": 1040,
+      "duration_ms": 834,
       "exit_code": 1,
       "name": "hidden_tests",
-      "output": "stderr:\nsemantic top-k mismatch\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-380q3hxt/workspace/.repogauntlet_grader/run_cpp.py\", line 9, in <module>\n    subprocess.run([str(binary.resolve())],check=True)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py\", line 528, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-380q3hxt/workspace/grader-hidden']' returned non-zero exit status 1.",
+      "output": "stderr:\nsemantic top-k mismatch\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-3qm152dq/workspace/.repogauntlet_grader/run_cpp.py\", line 9, in <module>\n    subprocess.run([str(binary.resolve())],check=True)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py\", line 528, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-3qm152dq/workspace/grader-hidden']' returned non-zero exit status 1.",
       "points": 0.0,
       "status": "failed"
     },
