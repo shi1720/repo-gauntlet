@@ -202,7 +202,7 @@ function Header({
                 RepoGauntlet
               </span>
               <span className="rounded-full border border-white/10 px-2 py-.5 font-mono text-[10px] text-slate-400">
-                v0.1
+                v0.1.3
               </span>
             </span>
             <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">
@@ -521,13 +521,7 @@ function ReportPanel({
               <Progress
                 aria-label={`${phase.name} score`}
                 value={index < visible ? phase.points : 0}
-                max={
-                  phase.name === 'hidden_tests'
-                    ? 55
-                    : phase.name === 'public_tests'
-                      ? 25
-                      : 10
-                }
+                max={phaseMaximum(report, phase.name)}
                 className="h-1.5 bg-white/7 [&_[data-slot=progress-indicator]]:bg-lime-300"
               />
             </div>
@@ -600,7 +594,7 @@ function ScorePanel({ report }: { report?: EvaluationReport }) {
                 key={phase.name}
                 label={phase.name.replace('_', ' ')}
                 score={`${phase.points} points`}
-                width={`${phase.name === 'hidden_tests' ? (phase.points / 55) * 100 : phase.name === 'public_tests' ? (phase.points / 25) * 100 : (phase.points / 10) * 100}%`}
+                width={`${Math.min(100, (phase.points / phaseMaximum(report, phase.name)) * 100)}%`}
                 warn={phase.status !== 'passed'}
               />
             ))}
@@ -621,6 +615,17 @@ function ScorePanel({ report }: { report?: EvaluationReport }) {
         </div>
       </div>
     </aside>
+  );
+}
+
+function phaseMaximum(
+  report: EvaluationReport,
+  phaseName: EvaluationReport['phases'][number]['name'],
+) {
+  return (
+    reports[report.task_id]?.golden?.phases.find(
+      (phase) => phase.name === phaseName,
+    )?.points || 1
   );
 }
 

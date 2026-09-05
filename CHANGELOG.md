@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3 — 2026-09-05
+
+- Promoted Vinext's base-path export into the GitHub Pages artifact root so the public workbench resolves at its canonical directory URL.
+- Added fail-fast layout checks to the Pages packaging step.
+- Derived phase progress scales from each task's calibrated scoring weights, eliminating overfilled bars when quality points are redistributed.
+
 ## 0.1.2 — 2026-09-05
 
 - Corrected the Rust deep-graph fixture so it deterministically exercises a 50,000-node dependency chain on every platform.
