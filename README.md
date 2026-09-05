@@ -9,9 +9,9 @@
 
 RepoGauntlet is a local-first workbench for authoring and calibrating reproducible software-engineering environments for AI agents. It does not grade a patch with one opaque pass/fail. It proves that the original defect is observable, plausible incomplete fixes are rejected, the reference solution passes, and repeated verdicts normalize to the same digest.
 
-**[Open the interactive evaluation workbench](https://repo-gauntlet-ai-lab.hushed-zebra-2444.chatgpt.site)**
+**[Open the interactive evaluation workbench](https://repo-gauntlet-ai-lab.sg127977958.chatgpt.site)**
 
-[![RepoGauntlet report workbench](./public/repogauntlet-workbench.png)](https://repo-gauntlet-ai-lab.hushed-zebra-2444.chatgpt.site)
+[![RepoGauntlet report workbench](./public/repogauntlet-workbench.png)](https://repo-gauntlet-ai-lab.sg127977958.chatgpt.site)
 
 ## 30-second demo
 
