@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "cf774c562197a2823975dc5ce7e66b05d97e09b64f7151f4f21936d3c264b26a",
+  "artifact_digest": "3ecfc4b626a46c7d59cf980a40b8fe4e01984b054770ff97ac90961ce99d655b",
   "candidate": "golden",
-  "canonical_digest": "b9814ef2cd014ffb6dcbe8b2dcbfb11af6bbe32ec079a06567464c87a74ab340",
+  "canonical_digest": "4d202fddfbbe7c447a6c67302bb2b7762802d2a11ae8681451f3f5e9763b5dc7",
   "phases": [
     {
-      "duration_ms": 281,
+      "duration_ms": 324,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,7 +12,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 1011,
+      "duration_ms": 1169,
       "exit_code": 0,
       "name": "public_tests",
       "output": "stdout:\npublic top-k contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
@@ -20,7 +20,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 1023,
+      "duration_ms": 972,
       "exit_code": 0,
       "name": "hidden_tests",
       "output": "stdout:\nhidden top-k contract passed with 100777 grader-observed comparisons\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests",
@@ -28,7 +28,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 217,
+      "duration_ms": 241,
       "exit_code": 0,
       "name": "quality",
       "output": "",

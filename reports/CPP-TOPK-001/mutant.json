@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "35d3abbe75ab57ba1fb74b833ef434a6ca2405afc87bf5f606ae58c1a962e1e3",
+  "artifact_digest": "e6514e0ae4cb1d25050532d5ee66762d53d40267571e5b3c08684d14eebb3fb8",
   "candidate": "mutant",
-  "canonical_digest": "ab39a77db33c97152e737efb012a22c424fa28d863694a528c7ca8323b674fa4",
+  "canonical_digest": "c9d1b92af42f4dcac1336f4057da9b85a6c70a88b4dfca15d394a43e6f1c1752",
   "phases": [
     {
-      "duration_ms": 201,
+      "duration_ms": 329,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,7 +12,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 714,
+      "duration_ms": 868,
       "exit_code": 0,
       "name": "public_tests",
       "output": "stdout:\npublic top-k contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
@@ -20,10 +20,10 @@
       "status": "passed"
     },
     {
-      "duration_ms": 834,
+      "duration_ms": 878,
       "exit_code": 1,
       "name": "hidden_tests",
-      "output": "stderr:\nsemantic top-k mismatch\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-3qm152dq/workspace/.repogauntlet_grader/run_cpp.py\", line 9, in <module>\n    subprocess.run([str(binary.resolve())],check=True)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py\", line 528, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-3qm152dq/workspace/grader-hidden']' returned non-zero exit status 1.",
+      "output": "stderr:\nsemantic top-k mismatch",
       "points": 0.0,
       "status": "failed"
     },

@@ -10,8 +10,8 @@
   "candidate_paths": ["ledger.py"],
   "commands": {
     "build": ["python3", "-m", "py_compile", "ledger.py"],
-    "public_tests": ["python3", ".repogauntlet_grader/public_test.py"],
-    "hidden_tests": ["python3", ".repogauntlet_grader/hidden_test.py"],
+    "public_tests": ["python3", ".repogauntlet_grader/run_python.py", "public"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/run_python.py", "hidden"],
     "quality": ["python3", "-m", "py_compile", "ledger.py"]
   },
   "limits": {"timeout_seconds": 10, "memory_mb": 128, "processes": 16, "network": false},

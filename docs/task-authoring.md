@@ -9,7 +9,8 @@ A task is ready only when:
 3. a plausible incomplete mutant fails for a different or narrower reason;
 4. the golden candidate passes every public, hidden, and quality gate;
 5. three repeated golden runs have the same canonical digest;
-6. candidate-editable paths exclude graders, manifests, generated reports, and reference solutions.
+6. candidate-editable paths exclude graders, manifests, generated reports, and reference solutions;
+7. test commands use a grader-owned wrapper that validates the child harness's native completion summary before emitting the RepoGauntlet phase marker.
 
 ## Directory contract
 
@@ -48,4 +49,5 @@ Inspect all three reports when calibration fails. A baseline that resolves means
 - The issue does not leak hidden assertion details or implementation filenames.
 - Test output describes violated behavior without revealing hidden expected values unnecessarily.
 - Commands are argv arrays with no shell interpolation.
+- Candidate stdout alone must never authorize a passing phase.
 - The golden solution is minimal, documented, and not mounted into a candidate interaction environment.

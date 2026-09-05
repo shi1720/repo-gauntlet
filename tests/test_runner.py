@@ -51,7 +51,24 @@ class RunnerTests(unittest.TestCase):
                 25,
             )
         self.assertEqual(phase.status, "failed")
-        self.assertIn("missing trusted grader completion marker", phase.output)
+        self.assertIn("missing grader-wrapper completion marker", phase.output)
+
+    def test_candidate_cannot_spoof_completion_markers_before_early_exit(self):
+        runner = Runner(ROOT)
+        with tempfile.TemporaryDirectory() as overlay_name:
+            overlay = Path(overlay_name)
+            (overlay / "ledger.py").write_text(
+                "import os\n"
+                "print('REPOGAUNTLET_PHASE_COMPLETE:public_tests', flush=True)\n"
+                "print('REPOGAUNTLET_PHASE_COMPLETE:hidden_tests', flush=True)\n"
+                "os._exit(0)\n"
+            )
+            report = runner.evaluate(TASK, "external", overlay)
+        self.assertEqual(report.verdict, "TEST_FAILED")
+        self.assertEqual(report.score, 10.0)
+        self.assertTrue(
+            all(phase.status == "failed" for phase in report.phases[1:3])
+        )
 
     def test_unsafe_external_overlay_returns_patch_rejected(self):
         runner = Runner(ROOT)

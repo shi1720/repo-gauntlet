@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "5992edfa66f795c9e92706d2849ca85ce483390cab78aa674b744e26edbb175b",
+  "artifact_digest": "58c59b14da9beba8a490173afa88a9ca9f4a297eca7a3081e10a3d7eb3f84e06",
   "candidate": "golden",
-  "canonical_digest": "b61731cd4f3856f6b48753d4a78e433963ac9200ab99a37ab98a11e7e7a7b333",
+  "canonical_digest": "ec4da2de4524d71fa51c6e54da84f3af2f26f407efd2cecbdb2a2b8cf1b8eb3c",
   "phases": [
     {
-      "duration_ms": 73,
+      "duration_ms": 108,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,7 +12,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 101,
+      "duration_ms": 206,
       "exit_code": 0,
       "name": "public_tests",
       "output": "stdout:\nREPOGAUNTLET_PHASE_COMPLETE:public_tests\nstderr:\n...\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK",
@@ -20,7 +20,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 114,
+      "duration_ms": 222,
       "exit_code": 0,
       "name": "hidden_tests",
       "output": "stdout:\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests\nstderr:\n...\n----------------------------------------------------------------------\nRan 3 tests in 0.014s\n\nOK",
@@ -28,7 +28,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 77,
+      "duration_ms": 83,
       "exit_code": 0,
       "name": "quality",
       "output": "",

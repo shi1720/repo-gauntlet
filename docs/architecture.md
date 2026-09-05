@@ -20,7 +20,7 @@ The authoring runner copies the frozen source to a fresh temporary directory for
 
 ### Grader phases
 
-Build, public tests, hidden tests, and quality checks each emit duration, exit code, bounded output, status, and points. A build failure prevents misleading test output. Timeouts and missing toolchains receive their own classifications.
+Build, public tests, hidden tests, and quality checks each emit duration, exit code, bounded output, status, and points. Test commands are grader-owned parent wrappers: they capture a child harness, verify its expected native completion summary, and only then emit the phase marker consumed by the control plane. A build failure prevents misleading test output. Timeouts and missing toolchains receive their own classifications.
 
 ### Canonical report
 

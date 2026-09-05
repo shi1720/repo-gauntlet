@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "07c09b834579efb228f7253cb05355d1786d200595b3c8c040e578e7be711bd3",
+  "artifact_digest": "eb3fac31701a6dfb99ef8a34921abf06133409e9a0702f9c33deb5463b8e22c3",
   "candidate": "baseline",
-  "canonical_digest": "743aec4f14633086dfe70469a060e679feb412a37b19e370b4dd3e75293386d8",
+  "canonical_digest": "9b62e9f8c203d687a10a04aef9b79e1cb15e2d4770f08c309716063cf793c8bc",
   "phases": [
     {
-      "duration_ms": 83,
+      "duration_ms": 94,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,18 +12,18 @@
       "status": "passed"
     },
     {
-      "duration_ms": 128,
+      "duration_ms": 217,
       "exit_code": 1,
       "name": "public_tests",
-      "output": "stderr:\n.F.\n======================================================================\nFAIL: test_touching_half_open_windows_merge (__main__.PublicContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-4hkpb8yl/workspace/.repogauntlet_grader/public_test.py\", line 13, in test_touching_half_open_windows_merge\n    self.assertEqual(reconcile([(0, 4), (4, 7)]), [(0, 7)])\nAssertionError: Lists differ: [(0, 4), (4, 7)] != [(0, 7)]\n\nFirst differing element 0:\n(0, 4)\n(0, 7)\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n(4, 7)\n\n- [(0, 4), (4, 7)]\n+ [(0, 7)]\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=1)",
+      "output": "stderr:\n.F.\n======================================================================\nFAIL: test_touching_half_open_windows_merge (__main__.PublicContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-pv9eq3fs/workspace/.repogauntlet_grader/public_test.py\", line 13, in test_touching_half_open_windows_merge\n    self.assertEqual(reconcile([(0, 4), (4, 7)]), [(0, 7)])\nAssertionError: Lists differ: [(0, 4), (4, 7)] != [(0, 7)]\n\nFirst differing element 0:\n(0, 4)\n(0, 7)\n\nFirst list contains 1 additional elements.\nFirst extra element 1:\n(4, 7)\n\n- [(0, 4), (4, 7)]\n+ [(0, 7)]\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=1)",
       "points": 0.0,
       "status": "failed"
     },
     {
-      "duration_ms": 149,
+      "duration_ms": 206,
       "exit_code": 1,
       "name": "hidden_tests",
-      "output": "stderr:\n.FF\n======================================================================\nFAIL: test_reversed_rejected (__main__.HiddenContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-g84cq84u/workspace/.repogauntlet_grader/hidden_test.py\", line 31, in test_reversed_rejected\n    reconcile([(5, 3)])\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_seeded_property_cases (__main__.HiddenContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-g84cq84u/workspace/.repogauntlet_grader/hidden_test.py\", line 40, in test_seeded_property_cases\n    self.assertEqual(reconcile(values), reference(values))\nAssertionError: Lists differ: [(-29, -7), (-3, -3), (2, 11), (11, 30)] != [(-29, -7), (2, 30)]\n\nFirst differing element 1:\n(-3, -3)\n(2, 30)\n\nFirst list contains 2 additional elements.\nFirst extra element 2:\n(2, 11)\n\n- [(-29, -7), (-3, -3), (2, 11), (11, 30)]\n+ [(-29, -7), (2, 30)]\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)",
+      "output": "stderr:\n.FF\n======================================================================\nFAIL: test_reversed_rejected (__main__.HiddenContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-wpnmggq3/workspace/.repogauntlet_grader/hidden_test.py\", line 31, in test_reversed_rejected\n    reconcile([(5, 3)])\nAssertionError: ValueError not raised\n\n======================================================================\nFAIL: test_seeded_property_cases (__main__.HiddenContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-wpnmggq3/workspace/.repogauntlet_grader/hidden_test.py\", line 40, in test_seeded_property_cases\n    self.assertEqual(reconcile(values), reference(values))\nAssertionError: Lists differ: [(-29, -7), (-3, -3), (2, 11), (11, 30)] != [(-29, -7), (2, 30)]\n\nFirst differing element 1:\n(-3, -3)\n(2, 30)\n\nFirst list contains 2 additional elements.\nFirst extra element 2:\n(2, 11)\n\n- [(-29, -7), (-3, -3), (2, 11), (11, 30)]\n+ [(-29, -7), (2, 30)]\n\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nFAILED (failures=2)",
       "points": 0.0,
       "status": "failed"
     },

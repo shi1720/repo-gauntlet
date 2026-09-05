@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4 — 2026-09-05
+
+- Moved Python, Java, and C++ phase markers into grader-owned parent wrappers that validate the child harness transcript before authorizing success.
+- Added a regression proving that a candidate cannot earn test points by printing both public markers and exiting before test execution.
+- Clarified that wrapper completion evidence detects truncated harness runs but is not an unforgeable hostile-code attestation.
+
 ## 0.1.3 — 2026-09-05
 
 - Promoted Vinext's base-path export into the GitHub Pages artifact root so the public workbench resolves at its canonical directory URL.

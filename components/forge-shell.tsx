@@ -202,7 +202,7 @@ function Header({
                 RepoGauntlet
               </span>
               <span className="rounded-full border border-white/10 px-2 py-.5 font-mono text-[10px] text-slate-400">
-                v0.1.3
+                v0.1.4
               </span>
             </span>
             <span className="block font-mono text-[10px] uppercase tracking-[.16em] text-slate-500">

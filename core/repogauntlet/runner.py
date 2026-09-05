@@ -88,7 +88,7 @@ class Runner:
             marker = "REPOGAUNTLET_PHASE_COMPLETE:%s" % name
             if status == "passed" and name in {"public_tests", "hidden_tests"} and marker not in output:
                 status = "failed"
-                output = (output + "\nmissing trusted grader completion marker").strip()
+                output = (output + "\nmissing grader-wrapper completion marker").strip()
             return PhaseResult(name, status, int((time.monotonic()-started)*1000), int(process.returncode or 0), output, float(points if status == "passed" else 0))
         except FileNotFoundError as exc:
             return PhaseResult(name, "infrastructure_error", int((time.monotonic()-started)*1000), 127, str(exc), 0.0)

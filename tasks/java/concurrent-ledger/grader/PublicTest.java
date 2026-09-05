@@ -7,7 +7,6 @@ public final class PublicTest {
         if (ledger.balance() != 12) throw new AssertionError("sequential credit failed");
         assertConcurrentCredits(new Ledger(0), 8, 20_000);
         System.out.println("public ledger contract passed");
-        System.out.println("REPOGAUNTLET_PHASE_COMPLETE:public_tests");
     }
 
     static void assertConcurrentCredits(Ledger ledger, int workers, int iterations) throws Exception {

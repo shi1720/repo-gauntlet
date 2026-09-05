@@ -20,4 +20,3 @@ if __name__ == "__main__":
     result = unittest.main(exit=False)
     if not result.result.wasSuccessful():
         raise SystemExit(1)
-    print("REPOGAUNTLET_PHASE_COMPLETE:public_tests")

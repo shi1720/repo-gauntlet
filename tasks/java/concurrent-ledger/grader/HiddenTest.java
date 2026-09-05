@@ -6,6 +6,5 @@ public final class HiddenTest {
         if (!rejected || ledger.balance() != 99) throw new AssertionError("negative credit contract failed");
         PublicTest.assertConcurrentCredits(new Ledger(0), 16, 50_000);
         System.out.println("hidden ledger contract passed");
-        System.out.println("REPOGAUNTLET_PHASE_COMPLETE:hidden_tests");
     }
 }

@@ -41,5 +41,6 @@ Docker reduces risk but is not a VM. High-risk multi-tenant execution should use
 
 - Windows process termination does not currently provide the same descendant cleanup guarantee as POSIX process-group termination.
 - Hidden tests are visible to code during the local grading process. They are unavailable during candidate generation, but not cryptographically secret from a malicious runtime.
+- Grader-owned wrapper markers detect truncated or prematurely exited test harnesses, but are not cryptographic attestations against a hostile process sharing the local workspace.
 - Report digests provide reproducibility checks, not authenticity. Signed provenance is future work.
 - Memory and PID values in v1 manifests document the intended container policy; the trusted local runner enforces wall time only.

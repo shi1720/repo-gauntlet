@@ -11,5 +11,5 @@ int main() {
     if(result != expected){std::cerr<<"semantic top-k mismatch\n";return 1;}
     const std::size_t lower=input.size()-16; const std::size_t upper=input.size()*12;
     if(observed<lower || observed>upper){std::cerr<<"tracked comparison contract failed: "<<observed<<" not in ["<<lower<<", "<<upper<<"]\n";return 1;}
-    std::cout<<"hidden top-k contract passed with "<<observed<<" grader-observed comparisons\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests\n";
+    std::cout<<"hidden top-k contract passed with "<<observed<<" grader-observed comparisons\n";
 }

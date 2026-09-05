@@ -62,7 +62,7 @@ flowchart LR
 
 The Python control plane validates manifests, rejects unsafe overlays, creates a fresh workspace, invokes commands as argv with `shell=False`, normalizes the environment, classifies each phase, and emits an auditable report. The hosted TypeScript workbench replays committed reports without pretending to run untrusted code in a browser.
 
-Test phases must return a trusted grader-completion marker; a candidate that exits successfully before the suite completes is still classified as failed. Distinct quality commands may earn points, while task packs whose quality command only repeats compilation assign it zero weight.
+Test harnesses run as children of grader-owned wrappers. A wrapper validates the child runner's expected summary before it emits the phase-completion marker, so a candidate that prints the public markers and exits early is still classified as failed. This guard detects incomplete harness execution; it is not a hostile-code attestation or a substitute for the container boundary described in the threat model. Distinct quality commands may earn points, while task packs whose quality command only repeats compilation assign it zero weight.
 
 Read the [architecture deep dive](./docs/architecture.md), [task-authoring guide](./docs/task-authoring.md), and [threat model](./docs/threat-model.md).
 
@@ -137,6 +137,6 @@ RepoGauntlet is the missing quality gate between “this issue looks interesting
 
 ## Status
 
-`v0.1.3` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
+`v0.1.4` includes five reference environments and a static report workbench. Committed reports cover the three toolchains available on the reference development host; CI calibrates all five. The next engineering milestone is a rootless OCI execution adapter with image-digest verification; that work is intentionally not represented as finished security isolation in this release.
 
 Contributions are welcome. Start with [CONTRIBUTING.md](./CONTRIBUTING.md). Security reports follow [SECURITY.md](./SECURITY.md).

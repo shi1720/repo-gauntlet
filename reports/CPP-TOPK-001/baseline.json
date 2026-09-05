@@ -1,10 +1,10 @@
 {
-  "artifact_digest": "a217ef667cd1155f764c451fc2419f44cacca80a763a8447e6ba6d0493650b4e",
+  "artifact_digest": "3e302ca885743d87ee6d8f81c74023b2016bbb7e191db77cee450bf7af66b4c9",
   "candidate": "baseline",
-  "canonical_digest": "4f16cede38dcb0df9f19c86b55d0a5aaabfd7cbe7c174bfae358c5257deedcf0",
+  "canonical_digest": "f650d1aa727d50f44b614ec7f99a00badd843d72e9f6a2ad9adcfbca6925cdd3",
   "phases": [
     {
-      "duration_ms": 284,
+      "duration_ms": 316,
       "exit_code": 0,
       "name": "build",
       "output": "",
@@ -12,7 +12,7 @@
       "status": "passed"
     },
     {
-      "duration_ms": 918,
+      "duration_ms": 1048,
       "exit_code": 0,
       "name": "public_tests",
       "output": "stdout:\npublic top-k contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
@@ -20,10 +20,10 @@
       "status": "passed"
     },
     {
-      "duration_ms": 1062,
+      "duration_ms": 871,
       "exit_code": 1,
       "name": "hidden_tests",
-      "output": "stderr:\ntracked comparison contract failed: 1836112 not in [99984, 1200000]\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-sdp55v53/workspace/.repogauntlet_grader/run_cpp.py\", line 9, in <module>\n    subprocess.run([str(binary.resolve())],check=True)\n  File \"/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py\", line 528, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-sdp55v53/workspace/grader-hidden']' returned non-zero exit status 1.",
+      "output": "stderr:\ntracked comparison contract failed: 1836112 not in [99984, 1200000]",
       "points": 0.0,
       "status": "failed"
     },
