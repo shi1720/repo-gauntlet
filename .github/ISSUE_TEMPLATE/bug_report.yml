@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a reproducible RepoGauntlet defect
+title: "[bug] "
+labels: [bug]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include the task id, candidate, command, and sanitized report.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS and relevant toolchain versions; never include secrets.
+    validations:
+      required: true
+
