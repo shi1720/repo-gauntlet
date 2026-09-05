@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "cf774c562197a2823975dc5ce7e66b05d97e09b64f7151f4f21936d3c264b26a",
+  "candidate": "golden",
+  "canonical_digest": "b9814ef2cd014ffb6dcbe8b2dcbfb11af6bbe32ec079a06567464c87a74ab340",
+  "phases": [
+    {
+      "duration_ms": 281,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 1011,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\npublic top-k contract passed\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 1023,
+      "exit_code": 0,
+      "name": "hidden_tests",
+      "output": "stdout:\nhidden top-k contract passed with 100777 grader-observed comparisons\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests",
+      "points": 65.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 217,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "",
+      "points": 0.0,
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 100.0,
+  "seed": 42,
+  "task_id": "CPP-TOPK-001",
+  "toolchain": {
+    "host": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.9.6"
+  },
+  "verdict": "RESOLVED"
+}

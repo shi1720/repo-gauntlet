@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "id": "JAVA-LEDGER-001",
+  "title": "Repair lost concurrent credits",
+  "language": "Java",
+  "category": "bug_fix",
+  "difficulty": "expert",
+  "issue": "Ledger.credit must apply every positive credit exactly once when many callers execute concurrently, preserve thread-safe balance reads, reject negative amounts, and keep the existing public class and method signatures.",
+  "source_dir": "source",
+  "candidate_paths": ["src/Ledger.java"],
+  "commands": {
+    "build": ["javac", "-d", ".", "src/Ledger.java"],
+    "public_tests": ["python3", ".repogauntlet_grader/run_java.py", "public"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/run_java.py", "hidden"],
+    "quality": ["javac", "-Xlint:all", "-Werror", "-d", ".", "src/Ledger.java"]
+  },
+  "limits": {"timeout_seconds": 30, "memory_mb": 512, "processes": 64, "network": false},
+  "scoring": {"build": 10, "public_tests": 25, "hidden_tests": 55, "quality": 10},
+  "seed": 42
+}

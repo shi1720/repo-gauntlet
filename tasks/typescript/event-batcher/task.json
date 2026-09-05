@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "id": "TS-BATCHER-001",
+  "title": "Make async batches re-entrancy safe",
+  "language": "TypeScript",
+  "category": "feature",
+  "difficulty": "hard",
+  "issue": "EventBatcher must deliver every accepted event exactly once and in order, including events added while an asynchronous flush is in progress. Concurrent flush calls must share completion, empty flushes must be harmless, and sink failures must preserve undelivered events for retry.",
+  "source_dir": "source",
+  "candidate_paths": ["event_batcher.ts"],
+  "commands": {
+    "build": ["tsc", "--noEmit", "--strict", "--target", "ES2022", "--module", "NodeNext", "--moduleResolution", "NodeNext", "event_batcher.ts"],
+    "public_tests": ["python3", ".repogauntlet_grader/run_ts.py", "public"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/run_ts.py", "hidden"],
+    "quality": ["tsc", "--noEmit", "--strict", "--noUncheckedIndexedAccess", "--target", "ES2022", "--module", "NodeNext", "--moduleResolution", "NodeNext", "event_batcher.ts"]
+  },
+  "limits": {"timeout_seconds": 20, "memory_mb": 256, "processes": 32, "network": false},
+  "scoring": {"build": 10, "public_tests": 25, "hidden_tests": 55, "quality": 10},
+  "seed": 42
+}

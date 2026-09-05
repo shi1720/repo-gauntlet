@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "97f76cba511ce6e8042682fa4272c13589e8a267c87db4ab87e9fccb9828cedc",
+  "candidate": "mutant",
+  "canonical_digest": "fb26dd6cf19332b556a9170d708965b91fa4ae11e7de5da1050c2dc8369d87bf",
+  "phases": [
+    {
+      "duration_ms": 84,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 162,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\nREPOGAUNTLET_PHASE_COMPLETE:public_tests\nstderr:\n...\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 166,
+      "exit_code": 1,
+      "name": "hidden_tests",
+      "output": "stderr:\n.F.\n======================================================================\nFAIL: test_reversed_rejected (__main__.HiddenContract)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/private/var/folders/vw/nb62dcpx661fyvd3p005p5jw0000gn/T/repogauntlet-_zv8ceb9/workspace/.repogauntlet_grader/hidden_test.py\", line 31, in test_reversed_rejected\n    reconcile([(5, 3)])\nAssertionError: ValueError not raised\n\n----------------------------------------------------------------------\nRan 3 tests in 0.017s\n\nFAILED (failures=1)",
+      "points": 0.0,
+      "status": "failed"
+    },
+    {
+      "duration_ms": 0,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "quality command skipped until behavior passes",
+      "points": 0.0,
+      "status": "skipped"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 35.0,
+  "seed": 42,
+  "task_id": "PY-INTERVAL-001",
+  "toolchain": {
+    "host": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.9.6"
+  },
+  "verdict": "TEST_FAILED"
+}

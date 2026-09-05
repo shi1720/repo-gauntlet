@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "dc526997dd0879fee525d7e21889aeba1e8ed56dbdb3d5b14601304d07ce9a1c",
+  "candidate": "golden",
+  "canonical_digest": "1498055b7305685b853edcd7d9f8b5dc95deb84d64a406d302f47aba5a5f071e",
+  "phases": [
+    {
+      "duration_ms": 700,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 179,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\nTAP version 13\n# (node:16087) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: delivers a normal batch in order\nok 1 - delivers a normal batch in order\n  ---\n  duration_ms: 0.618791\n  type: 'test'\n  ...\n# Subtest: shares concurrent flush completion\nok 2 - shares concurrent flush completion\n  ---\n  duration_ms: 0.112625\n  type: 'test'\n  ...\n# Subtest: empty flush is harmless\nok 3 - empty flush is harmless\n  ---\n  duration_ms: 0.078167\n  type: 'test'\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 74.641583\nREPOGAUNTLET_PHASE_COMPLETE:public_tests",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 180,
+      "exit_code": 0,
+      "name": "hidden_tests",
+      "output": "stdout:\nTAP version 13\n# (node:16111) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: drains events accepted during an active flush\nok 1 - drains events accepted during an active flush\n  ---\n  duration_ms: 0.582125\n  type: 'test'\n  ...\n# Subtest: restores a failed batch before newer events\nok 2 - restores a failed batch before newer events\n  ---\n  duration_ms: 0.217708\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 78.052125\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests",
+      "points": 55.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 409,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 100.0,
+  "seed": 42,
+  "task_id": "TS-BATCHER-001",
+  "toolchain": {
+    "host": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.9.6"
+  },
+  "verdict": "RESOLVED"
+}

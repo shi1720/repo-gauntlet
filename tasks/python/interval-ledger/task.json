@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "id": "PY-INTERVAL-001",
+  "title": "Repair half-open interval reconciliation",
+  "language": "Python",
+  "category": "bug_fix",
+  "difficulty": "medium",
+  "issue": "Reconcile unordered half-open intervals into a minimal union. Empty intervals must be discarded, duplicates must not change output, touching intervals must merge, and invalid reversed intervals must raise ValueError without mutating the input.",
+  "source_dir": "source",
+  "candidate_paths": ["ledger.py"],
+  "commands": {
+    "build": ["python3", "-m", "py_compile", "ledger.py"],
+    "public_tests": ["python3", ".repogauntlet_grader/public_test.py"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/hidden_test.py"],
+    "quality": ["python3", "-m", "py_compile", "ledger.py"]
+  },
+  "limits": {"timeout_seconds": 10, "memory_mb": 128, "processes": 16, "network": false},
+  "scoring": {"build": 10, "public_tests": 25, "hidden_tests": 65, "quality": 0},
+  "seed": 42
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "id": "CPP-TOPK-001",
+  "title": "Bound streaming top-k work",
+  "language": "C++",
+  "category": "performance",
+  "difficulty": "hard",
+  "issue": "Return the k largest tracked telemetry values in descending order with O(n log k) comparison work. Preserve duplicates, support k equal to zero or larger than the input, and use the comparison operators supplied by the caller.",
+  "source_dir": "source",
+  "candidate_paths": ["topk.cpp"],
+  "commands": {
+    "build": ["c++", "-std=c++17", "-Wall", "-Wextra", "-Werror", "-c", "topk.cpp", "-o", "topk.o"],
+    "public_tests": ["python3", ".repogauntlet_grader/run_cpp.py", "public"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/run_cpp.py", "hidden"],
+    "quality": ["c++", "-std=c++17", "-Wall", "-Wextra", "-Werror", "-c", "topk.cpp", "-o", "quality.o"]
+  },
+  "limits": {"timeout_seconds": 30, "memory_mb": 512, "processes": 16, "network": false},
+  "scoring": {"build": 10, "public_tests": 25, "hidden_tests": 65, "quality": 0},
+  "seed": 42
+}

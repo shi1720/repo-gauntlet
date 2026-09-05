@@ -1,0 +1,48 @@
+{
+  "artifact_digest": "5992edfa66f795c9e92706d2849ca85ce483390cab78aa674b744e26edbb175b",
+  "candidate": "golden",
+  "canonical_digest": "b61731cd4f3856f6b48753d4a78e433963ac9200ab99a37ab98a11e7e7a7b333",
+  "phases": [
+    {
+      "duration_ms": 79,
+      "exit_code": 0,
+      "name": "build",
+      "output": "",
+      "points": 10.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 150,
+      "exit_code": 0,
+      "name": "public_tests",
+      "output": "stdout:\nREPOGAUNTLET_PHASE_COMPLETE:public_tests\nstderr:\n...\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK",
+      "points": 25.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 156,
+      "exit_code": 0,
+      "name": "hidden_tests",
+      "output": "stdout:\nREPOGAUNTLET_PHASE_COMPLETE:hidden_tests\nstderr:\n...\n----------------------------------------------------------------------\nRan 3 tests in 0.014s\n\nOK",
+      "points": 65.0,
+      "status": "passed"
+    },
+    {
+      "duration_ms": 99,
+      "exit_code": 0,
+      "name": "quality",
+      "output": "",
+      "points": 0.0,
+      "status": "passed"
+    }
+  ],
+  "schema_version": "1.0",
+  "score": 100.0,
+  "seed": 42,
+  "task_id": "PY-INTERVAL-001",
+  "toolchain": {
+    "host": "macOS-26.6.2-arm64-arm-64bit",
+    "python": "3.9.6"
+  },
+  "verdict": "RESOLVED"
+}

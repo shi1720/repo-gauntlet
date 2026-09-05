@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "id": "RUST-PLANNER-001",
+  "title": "Refactor dependency planning without recursion",
+  "language": "Rust",
+  "category": "refactor",
+  "difficulty": "expert",
+  "issue": "Produce a stable dependency-first plan for every node without recursive stack growth. Cycles must return a typed error containing a concrete closed cycle path, dependencies absent as top-level keys must still be included, and lexical graph traversal must remain deterministic.",
+  "source_dir": "source",
+  "candidate_paths": ["src/lib.rs"],
+  "commands": {
+    "build": ["rustc", "--crate-type", "lib", "--edition", "2021", "src/lib.rs", "-o", "libplanner.rlib"],
+    "public_tests": ["python3", ".repogauntlet_grader/run_rust.py", "public"],
+    "hidden_tests": ["python3", ".repogauntlet_grader/run_rust.py", "hidden"],
+    "quality": ["rustc", "--crate-type", "lib", "--edition", "2021", "-D", "warnings", "src/lib.rs", "-o", "quality.rlib"]
+  },
+  "limits": {"timeout_seconds": 30, "memory_mb": 512, "processes": 32, "network": false},
+  "scoring": {"build": 10, "public_tests": 25, "hidden_tests": 55, "quality": 10},
+  "seed": 42
+}
